@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block content %}
+<h4> Гүйцэтгэл </h4>
+<table class="table">
+<thead>
+    <tr>
+      <th> ID </th>
+      <th> Сувилагч </th>
+      <th> эхлэх огноо</th>
+      <th> Дуусах онгоо </th>
+      <th> Өвчтөн </th>
+      <th> Онош </th>
+      <th> Төлөв </th>
+      <td> Үнэлгээ</td>
+    </tr>
+</thead>
+  <tbody>
+      {% for drug in emchilgee %}
+        <tr>
+          <td> <a href='#'> {{ drug.id }} </a></td>
+          <td>{{ drug.worker }}</td>
+          <td>{{ drug.start_date }}</td>
+          <td>{{ drug.end_date }}</td>
+          <td>{{ drug.costumer }}</td>
+          <td>{{ drug.onosh }}</td>
+          <td>
+            {% if drug.is_started %}
+              {% if drug.is_done %}
+                <span class="badge badge-success">Эмчилгээ дууссан.</span>
+              {% else %}
+                <span class="badge badge-warning">Эмчилгээ хийгдэж байгаа.</span>
+              {% endif %}
+            {% else %}
+              <span class="badge badge-danger">Эмчилгээ эхлээгүй.</span>
+            {% endif %}
+          </td>
+          <td>
+            {% for items in costumer_review %}
+              {% if drug.id == items.emchilgee %}
+                <span>
+                  {% if items.review == 1 %}
+                    <div class="form-check form-check-inline">
+                      <a href="#" class="btn btn-danger btn-lg">★</a>
+                    </div>
+                  {% elif items.review == 2%}
+                    <div class="form-check form-check-inline">
+                      <a href="#" class="btn btn-warning btn-lg">★ ★</a>
+                    </div>
+                  {% elif items.review == 3%}
+                    <div class="form-check form-check-inline">
+                      <a href="#" class="btn btn-info btn-lg">★ ★ ★</a>
+                    </div>
+                  {% elif items.review == 4%}
+                    <div class="form-check form-check-inline">
+                      <a href="#" class="btn btn-primary btn-lg">★ ★ ★ ★</a>
+                    </div>
+                  {% elif items.review == 5 %}
+                    <div class="form-check form-check-inline">
+                      <a href="#" class="btn btn-success btn-lg">★ ★ ★ ★ ★</a>
+                    </div>
+                  {% endif %}
+                </span>
+              {% endif %}
+            {% endfor %}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2"> Эмчийн үнэлгээ </td>
+          <td colspan="5">
+            <div class="form-check form-check-inline">
+              <a href="{% url 'drug:make_review_1' drug.id %}" class="btn btn-danger btn-lg">★</a>
+            </div>
+            <div class="form-check form-check-inline">
+              <a href="{% url 'drug:make_review_2' drug.id %}" class="btn btn-warning btn-lg">★ ★</a>
+            </div>
+            <div class="form-check form-check-inline">
+              <a href="{% url 'drug:make_review_3' drug.id %}" class="btn btn-info btn-lg">★ ★ ★</a>
+            </div>
+            <div class="form-check form-check-inline">
+              <a href="{% url 'drug:make_review_4' drug.id %}" class="btn btn-primary btn-lg">★ ★ ★ ★</a>
+            </div>
+            <div class="form-check form-check-inline">
+              <a href="{% url 'drug:make_review_5' drug.id %}" class="btn btn-success btn-lg">★ ★ ★ ★ ★</a>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

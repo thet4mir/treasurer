@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h4> Онош нэмэх </h4>
+<form method="post" novalidate>
+    {% csrf_token %}
+    <h4> Онош </h4>
+    <table class="table form-table table-bordered table-sm">
+      <thead class="thead-light text-center">
+        <tr>
+          <th> Өвчтөн </th>
+          <th> Бичсэн огноо </th>
+          <th> Тайлбар </th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for form_data in formset1 %}
+          <tr>
+              <td>
+                  {{ form_data.costumer}}
+              </td>
+              <td>
+
+                    {{ form_data.doctor }}
+
+              </td>
+              <td>
+                  {{ form_data.disc }}
+              </td>
+          </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {{ formset1.management_form }}
+    <input class="btn search" type="submit" value="Submit" />
+</form>
+
+{% endblock %}
+
+{% block extra_script %}
+	<script type="text/javascript" src="{% static 'js/formset.js' %}"></script>
+{% endblock%}

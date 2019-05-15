@@ -1,0 +1,5 @@
+Django==1.11.15
+django-bootstrap3==11.0.0
+django-crispy-forms==1.7.2
+django-mathfilters==0.4.0
+pytz==2019.1

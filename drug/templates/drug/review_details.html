@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load mathfilters %}
+
+{% block content %}
+{% for objects in costumer %}
+<div class="row">
+  <div class="col-md-4">
+      <h4 class="text-center"> Эмчлүүлэгчийн <br> ерөнхий мэдээлэл </h4>
+      <table class="list hoverable">
+        <tbody>
+            <tr>
+              <td> <b>Овог:</b> </td>
+              <td> {{objects.lastname}} </td>
+            </tr>
+            <tr>
+              <td><b> Нэр: </b></td>
+              <td> {{objects.firstname}} </td>
+            </tr>
+            <tr>
+              <td><b> Регистр №: </b></td>
+              <td> {{objects.register}} </td>
+            </tr>
+            <tr>
+              <td><b> Хүйс: </b></td>
+              <td> {{objects.gender}} </td>
+            </tr>
+            <tr>
+              <td><b> Нас: </b></td>
+              <td> {{objects.age}} </td>
+            </tr>
+            <tr>
+              <td><b> Нэмэлт мэдээлэл: </b></td>
+              <td> {{objects.description}} </td>
+            </tr>
+        </tbody>
+      </table>
+  </div>
+  {% endfor %}
+  <div class="col-md-8">
+    <div class="card bg-light my-3">
+      <div class="card-body text-left">
+        <h4 class="text-center"> Онош дахь эмчилгээ </h4>
+        <table>
+          <tbody>
+            <tr>
+              <th> Онош: </th>
+              <td> {{ emchilgee.onosh }} </td>
+            </tr>
+            <tr>
+              <th> Эхлэх огноо: </th>
+              <td> {{ emchilgee.start_date }} </td>
+            </tr>
+            <tr>
+              <th> Дуусах огноо: </th>
+              <td> {{ emchilgee.end_date }} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card bg-light my-3">
+      <div class="card-body text-left">
+        <table class="table table-responsive">
+          <thead>
+            <tr class="thead-light">
+              <th> Эмчилгээ </th>
+              <th> Эмийн нэр </th>
+              {% for x in days %}
+                <th> {{x}} </th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for items in emchilgee.drug_important_set.all %}
+                <tr>
+                  <td>
+                    {% ifchanged items.emchilgee_list %}
+                        {{ items.emchilgee_list }}
+                    {% endifchanged %}
+                  </td>
+
+                  <td> {{items.name}} </td>
+                    {% for key, value in result.items %}
+                    <td>
+                      {% if value == "✔" %}
+                        <span class="badge badge-pill badge-success"> {{ value }} </span>
+                      {% elif value == "✘" %}
+                        <span class="badge badge-pill badge-danger"> {{ value }} </span>
+                      {% elif value == "?"%}
+                        <span class="badge badge-pill badge-warning"> {{ value }} </span>
+                      {% else %}
+                        <span class="badge badge-pill badge-info"> {{ value }} </span>
+                      {% endif %}
+                    </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            <tr class="thead-light">
+              <th  colspan="2">
+                  Эмчилгээ хийгдсэн эсэх
+              </th>
+              {% for x in days %}
+                <th>
+                  <form action="{% url 'drug:review_details' emchilgee.id %}" method="POST">
+                    {% csrf_token %}
+                    {% if x == today %}
+                      {% if button == True %}
+                        <input type="hidden" name="emchilgee" value="{{ emchilgee.id }}">
+                        <input class="btn btn-primary btn-xs" type="submit" value="✔" />
+                      {% endif %}
+                    {% endif %}
+                  </form>
+                </th>
+              {% endfor %}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

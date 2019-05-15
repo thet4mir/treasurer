@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-4">
+      <h4> Ерөнхий мэдээлэл </h4>
+      <table class="list hoverable">
+        <tbody>
+          {% for data in user %}
+            <tr>
+              <td> <b>Овог:</b> </td>
+              <td> {{data.lastname}} </td>
+            </tr>
+            <tr>
+              <td><b> Нэр: </b></td>
+              <td> {{data.firstname}} </td>
+            </tr>
+            <tr>
+              <td><b> Регистр №: </b></td>
+              <td> {{data.register}} </td>
+            </tr>
+            <tr>
+              <td><b> Хүйс: </b></td>
+              <td> {{data.gender}} </td>
+            </tr>
+            <tr>
+              <td><b> Нас: </b></td>
+              <td> {{data.age}} </td>
+            </tr>
+            {% if request.user.is_worker %}
+              <tr>
+                <td><b> Зэрэг: </b></td>
+                <td> {{data.degree}} </td>
+              </tr>
+              <tr>
+                <td><b> Албан тушаал: </b></td>
+                <td> Нярав </td>
+              </tr>
+            {% else %}
+            <tr>
+              <td><b> Нэмэлт мэдээлэл: </b></td>
+              <td> {{data.description}} </td>
+            </tr>
+            {% endif %}
+          {% endfor%}
+
+        </tbody>
+      </table>
+  </div>
+</div>
+{% endblock %}

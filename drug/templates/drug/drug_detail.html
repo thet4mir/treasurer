@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="col-md-12">
+  <h4> Эм нэмэх </h4>
+  <form method="post" novalidate>
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="form-group col-md-3 mb-0">
+          {{ form.drug_code|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-3 mb-0">
+          {{ form.drug_name|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-3 mb-0">
+          {{ form.producted_date|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-3 mb-0">
+          {{ form.serial_number|as_crispy_field }}
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4 mb-0">
+          {{ form.instructions|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-4 mb-0">
+          {{ form.sanuulga|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-4 mb-0">
+          {{ form.hadgalah_hugatsaa|as_crispy_field }}
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-2 mb-0">
+          {{ form.uildver_ner|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-2 mb-0">
+          {{ form.drug_type|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-2 mb-0">
+          {{ form.hemjee|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-2 mb-0">
+          {{ form.helber|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-2 mb-0">
+          {{ form.savalgaa|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-2 mb-0">
+          {{ form.storage_condition|as_crispy_field }}
+        </div>
+      </div>
+      <input class="btn btn-primary" type="submit" value="Submit" />
+  </form>
+</div>
+<div class="col-md-12">
+  <h4> Эмийн жагсаалт </h4>
+  <table class="table table-responsive">
+    <thead>
+        <tr>
+          <th>Name</th>
+          <th>size</th>
+          <th>nairlaga</th>
+          <th>intro</th>
+          <th>other_side</th>
+          <th>zaavar</th>
+          <th>age</th>
+          <th>duration</th>
+          <th>date</th>
+          <th>factory</th>
+          <th>price</th>
+          <th>drug_catedory</th>
+          <th>storage_condition</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for drug in drug_detail %}
+        <tr>
+        <td>{{ drug.drug_code }}</td>
+        <td>{{ drug.drug_name }}</td>
+        <td>{{ drug.instructions }}</td>
+        <td>{{ drug.serial_number }}</td>
+        <td>{{ drug.producted_date }}</td>
+        <td>{{ drug.hadgalah_hugatsaa }}</td>
+        <td>{{ drug.uildver_ner }}</td>
+        <td>{{ drug.sanuulga }}</td>
+        <td>{{ drug.drug_type }}</td>
+        <td>{{ drug.savalgaa }}</td>
+        <td>{{ drug.hemjee }}</td>
+        <td>{{ drug.helber }}</td>
+        <td>{{ drug.storage_condition }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
